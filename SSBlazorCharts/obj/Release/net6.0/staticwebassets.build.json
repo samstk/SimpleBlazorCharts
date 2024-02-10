@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "Hash": "Jaa61qiTljc9FAbeLvpxD4plNoJ3ElJ36ehUlZ6w9WQ=",
+  "Source": "SSBlazorCharts",
+  "BasePath": "_content/SSBlazorCharts",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "SSBlazorCharts\\wwwroot",
+      "Source": "SSBlazorCharts",
+      "ContentRoot": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\wwwroot\\",
+      "BasePath": "_content/SSBlazorCharts",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\obj\\Release\\net6.0\\scopedcss\\bundle\\SSBlazorCharts.styles.css",
+      "SourceId": "SSBlazorCharts",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\obj\\Release\\net6.0\\scopedcss\\bundle\\",
+      "BasePath": "_content/SSBlazorCharts",
+      "RelativePath": "SSBlazorCharts.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\obj\\Release\\net6.0\\scopedcss\\bundle\\SSBlazorCharts.styles.css"
+    },
+    {
+      "Identity": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\SSBlazorCharts.bundle.scp.css",
+      "SourceId": "SSBlazorCharts",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\",
+      "BasePath": "_content/SSBlazorCharts",
+      "RelativePath": "SSBlazorCharts.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\SSBlazorCharts.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\wwwroot\\background.png",
+      "SourceId": "SSBlazorCharts",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\wwwroot\\",
+      "BasePath": "_content/SSBlazorCharts",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "SSBlazorCharts",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\samst\\OneDrive\\Documents\\0. Projects\\SimpleBlazorCharts\\SSBlazorCharts\\wwwroot\\",
+      "BasePath": "_content/SSBlazorCharts",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

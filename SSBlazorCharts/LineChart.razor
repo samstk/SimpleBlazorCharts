@@ -1,0 +1,223 @@
+﻿@*@typeparam XType
+@typeparam YType*@
+
+@using System.Text
+
+@*Use standard datetime and double for debug*@
+
+@code {
+    [Parameter]
+    public string TitleStyle { get; set; } = "";
+
+    [Parameter]
+    public string Title { get; set; } = "";
+
+    [Parameter]
+    public LineChartData<DateTime, double> Data { get; set; }
+
+    [Parameter]
+    public string XLabel { get; set; } = "";
+
+    [Parameter]
+    public string YLabel { get; set; } = "";
+
+    [Parameter]
+    public string XLabelStyle { get; set; } = "";
+
+    [Parameter]
+    public string YLabelStyle { get; set; } = "";
+
+    [Parameter]
+    public string XStepStyle { get; set; } = "";
+
+    [Parameter]
+    public string YStepStyle { get; set; } = "";
+
+    [Parameter]
+    public string YGridLineStyle { get; set; } = "";
+
+    [Parameter]
+    public string XGridLineStyle { get; set; } = "";
+
+    [Parameter]
+    public int RenderWidth { get; set; } = 800;
+
+    [Parameter]
+    public int RenderHeight { get; set; } = 600;
+
+    [Parameter]
+    public int RenderPaddingRight { get; set; } = 100;
+
+    [Parameter]
+    public int RenderPaddingTop { get; set; } = 20;
+
+    [Parameter]
+    public int RenderXLabelsHeight { get; set; } = 100;
+
+    [Parameter]
+    public int RenderYLabelsWidth { get; set; } = 200;
+
+    [Parameter]
+    public string PointLineStroke { get; set; } = "#000000";
+
+    [Parameter]
+    public double PointLineStrokeWidth { get; set; } = 3;
+
+    [Parameter]
+    public string ContainerClass { get; set; } = "";
+
+    [Parameter]
+    public string ContainerStyle { get; set; } = "";
+
+    [Parameter]
+    public int NumberOfXLabels { get; set; } = 6;
+
+    [Parameter]
+    public int NumberOfYLabels { get; set; } = 4;
+
+    [Parameter]
+    public string YValueFormat { get; set; } = "0.00";
+
+    private string LinePointsOf(LineChartDataSet<DateTime, double> dataset)
+    {
+        StringBuilder pointsString = new StringBuilder();
+        dataset.SortByX();
+
+        TimeSpan minTimeValue = new TimeSpan(Data.MinXValue.Ticks);
+        TimeSpan maxTimeValue = new TimeSpan(Data.MaxXValue.Ticks);
+        TimeSpan span = maxTimeValue - minTimeValue;
+
+
+        foreach(var point in dataset.Points) {
+            double timePerc = new TimeSpan(point.X.Ticks).Subtract(minTimeValue).Divide(span);
+            double valuePerc = (point.Y - Data.MinYValue) / (Data.MaxYValue - Data.MinYValue);
+            double xpos = timePerc * PlotWidth + PlotStartX;
+            double ypos = PlotStartY - valuePerc * PlotHeight;
+            pointsString.Append($"{xpos} {ypos} ");
+        }
+
+        return pointsString.ToString();
+    }
+
+    private double PlotStartY => RenderHeight - RenderXLabelsHeight;
+    private double PlotStartX => RenderYLabelsWidth;
+    private double PlotEndX => (RenderWidth - RenderPaddingRight);
+    private double PlotEndY => RenderPaddingTop;
+    private double PlotCenterX => (PlotStartX + PlotEndX) / 2;
+    private double PlotCenterY => (PlotStartY + PlotEndY) / 2;
+    private double PlotHeight => Math.Abs(PlotEndY - PlotStartY);
+    private double PlotWidth => PlotEndX - PlotStartX;
+
+    struct LabelPosition {
+        public int AxisPosition;
+        public string Text;
+    }
+
+
+    private LabelPosition[] XLabels {
+        get {
+            LabelPosition[] labels = new LabelPosition[NumberOfXLabels];
+
+            if (NumberOfXLabels <= 1)
+                return labels;
+
+            DateTime minValue = Data.MinXValue;
+            TimeSpan stepValue = (Data.MaxXValue - minValue).Divide(NumberOfXLabels - 1);
+
+            double stepWidth = PlotWidth / (NumberOfXLabels - 1);
+
+            for(int i = 0; i < NumberOfXLabels; i++) {
+
+                DateTime xValue = minValue.Add(stepValue * i);
+
+                labels[i] = new LabelPosition() {
+                    AxisPosition = (int)(i * stepWidth),
+                    Text = $"{xValue.Day}/{xValue.Month}/{xValue.Year}"
+                };
+            }
+
+            return labels;
+        }
+    }
+    private LabelPosition[] YLabels {
+        get {
+            LabelPosition[] labels = new LabelPosition[NumberOfYLabels];
+
+            if (NumberOfYLabels <= 1)
+                return labels;
+
+            double minValue = Data.MinYValue;
+            double stepValue = (Data.MaxYValue - minValue) / (NumberOfYLabels - 1);
+
+            double stepHeight = PlotHeight / (NumberOfYLabels - 1);
+
+            for (int i = 0; i < NumberOfYLabels; i++)
+            {
+                double yValue = minValue + (stepValue * i);
+
+                labels[i] = new LabelPosition()
+                    {
+                        AxisPosition = (int)(i * stepHeight),
+                        Text = yValue.ToString(YValueFormat)
+                    };
+            }
+
+            return labels;
+        }
+    }
+}
+
+<div class="chart-container @ContainerClass" style="@ContainerStyle">
+    <h3 class="chart-title mt-3" style="@TitleStyle">
+        @Title
+    </h3>
+
+    <svg class="chart" viewBox="0 0 @RenderWidth @RenderHeight">
+        <g style="font-size: 26pt;">
+            <text writing-mode="tb" x="@(RenderYLabelsWidth / 4)" y="@(PlotCenterY)" transform=""
+                  style="font-weight: 700; text-anchor: middle; @YLabelStyle">
+                @YLabel
+            </text>
+            <text x="@(PlotCenterX)" y="@(RenderHeight - RenderXLabelsHeight / 4)" transform=""
+                style="font-weight: 700; text-anchor: middle; @XLabelStyle">
+                @XLabel
+            </text>
+        </g>
+
+        @foreach (LabelPosition position in XLabels)
+        {
+            <g style="font-size: 24pt;">
+                <text x="@(position.AxisPosition + PlotStartX)" y="@(RenderHeight - 3 * RenderXLabelsHeight / 4 + 10)"
+                  style="text-anchor: middle; fill: #999999; @XStepStyle" transform="">
+                    <tspan>@position.Text</tspan>
+                </text>
+            </g>
+        }
+
+        @foreach (LabelPosition position in YLabels)
+        {
+            <g style="font-size: 24pt;">
+                <text x="@(RenderYLabelsWidth - 10)" y="@(PlotStartY + 5 - position.AxisPosition)"
+                  style="text-anchor: end; @YStepStyle" transform="">
+                    <tspan>@position.Text</tspan>
+                </text>
+            </g>
+        }
+        <g style="stroke: #bbbbbb; stroke-width: 1;">
+            <line x1="@PlotStartX" y1="@(PlotEndY)"
+                  x2="@PlotStartX" y2="@(PlotStartY)" />
+        </g>
+        <g style="stroke: #bbbbbb; stroke-width: 1;">
+            <line x1="@PlotStartX" y1="@(PlotStartY)"
+                  x2="@PlotEndX" y2="@(PlotStartY)" />
+        </g>
+
+        @foreach (var set in Data.DataSets) {
+            <polyline
+                fill="none"
+                stroke="@PointLineStroke"
+                stroke-width="@PointLineStrokeWidth"
+                points="@LinePointsOf(set)" />
+        }
+    </svg>
+</div>
